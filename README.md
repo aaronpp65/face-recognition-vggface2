@@ -1,60 +1,72 @@
 # Face recognition using vggface2
 
-One Paragraph of project description goes here
+Face recognition is the general task of identifying and verifying people from photographs of their face.This is a ready to use face recognition code using vggface2.
+The VGGFace refers to a series of models developed for face recognition and demonstrated on benchmark computer vision datasets by members of the Visual Geometry Group (VGG) at the University of Oxford.
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+```
+git clone https://github.com/aaronpp65/face-recognition-vggface2.git
+```
+
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What things you need to install and how to install them
 
 ```
-Give examples
+pip install face_recognition
 ```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
 ```
-Give the example
+# Most Recent One (Suggested)
+pip install git+https://github.com/rcmalli/keras-vggface.git
+# Release Version
+pip install keras_vggface
 ```
-
-And repeat
-
 ```
-until finished
+sudo pip install mtcnn
 ```
+## Usage
+### Adding a face to the database
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
 
 ```
-Give an example
+from face_recognizer import FaceRecognizer
+import cv2
+
+fce=FaceRecognizer()
+# path to the image of face
+camera = cv2.imread('/home/phi/Neuroplex/face-recognition-vggface2/mals.jpg')
+camera = cv2.cvtColor(camera, cv2.COLOR_BGR2RGB)
+# name of the person
+fce.add_new_face(camera,'mals')
+
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
+To run 
+```
+python add_new_face.py
+```
+### Running the recognizer
 
 ```
-Give an example
+python main.py
 ```
+### Deleting a face from the database
 
-## Deployment
 
-Add additional notes about how to deploy this on a live system
+```
+from face_recognizer import FaceRecognizer
+
+fce=FaceRecognizer()
+# name of the person to be deleted from the databse
+fce.delete_a_face('mals')
+
+```
+To run 
+```
+python delete_face.py
+```
 
 ## Built With
 
@@ -64,17 +76,15 @@ Add additional notes about how to deploy this on a live system
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Aaron P P** - *Initial work* - [aaronpp65](https://github.com/aaronpp65)
+* **Pranoy R** - *Initial work* - [aaronpp65](https://github.com/pranoyr)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+See also the list of [contributors](https://github.com/aaronpp65/face-recognition-vggface2/contributors) who participated in this project.
 
 ## License
 
@@ -82,7 +92,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* [VGGFace2: A dataset for recognising faces across pose and age](https://arxiv.org/abs/1710.08092)
+* [Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks](https://arxiv.org/abs/1604.02878)
+
 
