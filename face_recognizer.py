@@ -12,6 +12,7 @@ from mtcnn.mtcnn import MTCNN
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 
+#<todo> change mtcnn to hog
 path = os.path.dirname(os.path.abspath(__file__))
 
 def who_is_it(encodings, database, threshold = 0.5):
@@ -84,13 +85,9 @@ def extract_face(img, required_size=(224, 224)):
 		face_array -- array of cropped images
 		"""
 
-	# create the detector, using default weights
-	detector = MTCNN()
-	# detect faces in the image
-	results = detector.detect_faces(img)
-	# extract the bounding box from the first face
-	x1, y1, width, height = results[0]['box']
-	x2, y2 = x1 + width, y1 + height
+	# # create the detector, using default weights
+	boxes = face_recognition.face_locations(img, model='hog')
+	y1,x2,y2,x1 = boxes[0]
 	# extract the face
 	face = img[y1:y2, x1:x2]
 	# resize img to the model size
