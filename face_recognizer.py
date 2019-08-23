@@ -8,7 +8,6 @@ from PIL import Image
 from numpy import asarray
 import numpy as np
 from scipy.spatial.distance import cosine
-from mtcnn.mtcnn import MTCNN
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 
