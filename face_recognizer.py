@@ -11,7 +11,6 @@ from scipy.spatial.distance import cosine
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 
-#<todo> change mtcnn to hog
 path = os.path.dirname(os.path.abspath(__file__))
 
 def who_is_it(encodings, database, threshold = 0.5):
