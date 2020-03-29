@@ -1,4 +1,4 @@
-from keras.engine import  custom_vgg_model
+from keras.engine import  Model
 from keras.layers import Flatten, Dense, Input
 from keras_vggface.vggface import VGGFace
 from os import listdir
@@ -13,6 +13,7 @@ from numpy import load
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Normalizer
+from keras.callbacks import ModelCheckpoint
 
 #custom parameters
 nb_class = 2
@@ -83,10 +84,10 @@ def load_dataset(directory):
 	return asarray(X), asarray(y)
  
 # load train dataset
-trainX, trainy = load_dataset('5-celebrity-faces-dataset/train/')
+trainX, trainy = load_dataset('/home/neuroplex/data/lfw/')
 print(trainX.shape, trainy.shape)
 # load test dataset
-testX, testy = load_dataset('5-celebrity-faces-dataset/val/')
+testX, testy = load_dataset('/home/neuroplex/data/lfw/')
 # save arrays to one file in compressed format
 savez_compressed('5-celebrity-faces-dataset.npz', trainX, trainy, testX, testy)
 print("file is compressed")
@@ -104,8 +105,13 @@ out_encoder = LabelEncoder()
 out_encoder.fit(trainy)
 trainy = out_encoder.transform(trainy)
 testy = out_encoder.transform(testy)
+
+# define the checkpoint
+filepath = "model.h5"
+checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
+callbacks_list = [checkpoint]
 # fit custom_vgg_model
-custom_vgg_model.fit(trainX, trainy)
+custom_vgg_model.fit(trainX, trainy, epochs=100, batch_size=50, callbacks=callbacks_list)
 # predict
 yhat_train = custom_vgg_model.predict(trainX)
 yhat_test = custom_vgg_model.predict(testX)
